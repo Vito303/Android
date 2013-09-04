@@ -1,0 +1,48 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title>Vrhovi</title> 
+  <link type="text/css" rel="stylesheet" href="css/styles.css" />
+  <link type="text/css" rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery.pajinate.js"></script>  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $.ajax({
+        type:"GET",
+        cache : false,
+        url:"peak_data.xml",
+        dataType: "xml",
+        success: function(xml) {
+                $(xml).find('vrh').each(function(){
+                //var id = $(this).attr('id');
+                var name = $(this).find('name').text();
+                var link = $(this).find('link').text();
+                var height = $(this).find('height').text();
+                $("#name-wrap").append("<li><a href="+link+" target='_blank'>"+name+" ("+height+" m)</a></li>");
+                // $('<li></li>').html('<a href="'+url+'">'+name+'</a>').appendTo('#name-wrap');
+                });
+                $("#name-wrap").listview("refresh");
+                //$('#paging_container1').pajinate();
+        }
+        });
+      });
+  </script>
+</head> 
+<body> 
+<div data-role="page" id="home">
+  <div data-role="header">
+    <h1>Vrhovi</h1>
+  </div>
+
+  <div data-role="content" id="content">
+<!--     <div id="paging_container1" class="container">
+        <div class="page_navigation"></div>
+        <ul  id="name-wrap" class="content" data-role="listview" data-inset="true" data-filter="true"></ul>
+      </div>   -->
+      <ul  id="name-wrap" class="content" data-role="listview" data-inset="true" data-filter="true"></ul>
+  </div>
+</div>  
+</body>
+</html>
